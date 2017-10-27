@@ -27,6 +27,9 @@ public class Environment {
 	public final static String PASSWORD = "password";
 
 	private static Properties prop;
+	
+	/**This is constant attribute to identify the property persistence type,e.g File,XML,DB,CSV*/
+	public final static String Property_TYPE = "propertyType";
 
 	/**
 	 * This method reads-in the environment setting from a properties file and stores them in
@@ -71,5 +74,32 @@ public class Environment {
 	 */
 	public static String getPassword() {
 		return prop.getProperty(PASSWORD);
+	}
+	
+	/**
+	 * if you put password in the property file, the password is obtained here.
+	 * @return the password
+	 */
+	public static String getPropertyFactoryName() {
+		String f_type = prop.getProperty(Property_TYPE);
+		
+		if(f_type.equals("")){
+			return "";
+			//throw new RuntimeException("No Property Type defined in the vcms.properties.");
+		}
+		
+		f_type = f_type.toUpperCase();
+		
+		if(f_type.equals("FILE")){
+			System.out.println("----------Type ---------------File");
+			return "sg.edu.nus.iss.vmcs.system.FilePropertyLoaderFactory";
+		}
+		
+		if(f_type.equals("XML")){
+			return "sg.edu.nus.iss.vmcs.system.XMLPropertyLoaderFactory";
+		}
+		return "";
+		//throw new IllegalArgumentException(f_type + " Persistance Factory is not avaialble.");
+		
 	}
 }//End of class Environment

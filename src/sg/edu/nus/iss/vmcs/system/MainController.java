@@ -43,8 +43,11 @@ public class MainController {
 	 * simulation of the vending machine, and initiate the display of the SimulatorControlPanel
 	 * (the main menu).
 	 * @throws VMCSException if fail to initialize.
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public void start() throws VMCSException {
+	public void start() throws VMCSException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		try {
 			initialize();
 			simulatorCtrl.displaySimulatorControlPanel();
@@ -57,16 +60,19 @@ public class MainController {
 	/**
 	 * This method creates all the control objects.
 	 * @throws VMCSException if fail to load drinks properties or cash properties.
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public void initialize() throws VMCSException {
+	public void initialize() throws VMCSException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		try {
 			Environment.initialize(propertyFile);
-			CashPropertyLoader cashLoader =
-				new CashPropertyLoader(Environment.getCashPropFile());
-			DrinkPropertyLoader drinksLoader =
-				new DrinkPropertyLoader(Environment.getDrinkPropFile());
+			AbstractPropertyLoaderFactory propertyFactory = (AbstractPropertyLoaderFactory)Class.forName(Environment.getPropertyFactoryName()).newInstance();
+			AbstractCashLoader cashLoader = propertyFactory.createCashLoader();
+			AbstractDrinkLoader drinksLoader = propertyFactory.createDrinkLoader();
 			cashLoader.initialize();
 			drinksLoader.initialize();
+			
 			storeCtrl = new StoreController(cashLoader, drinksLoader);
 			storeCtrl.initialize();
 			simulatorCtrl = new SimulationController(this);

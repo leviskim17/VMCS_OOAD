@@ -32,10 +32,10 @@ public class Vmcs {
 	 * This method start the MainController.
 	 */
 	public void start() {
-		MainController mc = new MainController(propertiesFile);
 		try {
+			MainController mc = new MainController(propertiesFile);
 			mc.start();
-		} catch (VMCSException e) {
+		} catch (VMCSException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			System.out.println("Vmcs.start: Error in system initialization: "+ e.getMessage());
 			System.exit(0);
 		}
