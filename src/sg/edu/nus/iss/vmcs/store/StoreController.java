@@ -32,18 +32,35 @@ public class StoreController {
 
 	private PropertyLoader cashLoader;
 	private PropertyLoader drinksLoader;
+	
+	private static StoreController storeController;
 
 	/**
 	 * This constructor creates an instance of StoreController object.
 	 * @param cashLoader the cash loader.
 	 * @param drinksLoader the drinks loader.
 	 */
-	public StoreController(
+	private StoreController(
 		PropertyLoader cashLoader,
 		PropertyLoader drinksLoader) {
 		this.cashLoader = cashLoader;
 		this.drinksLoader = drinksLoader;
 	}
+	
+	///SingletonPattern 
+	/**
+	 * This method instantiate the {@link CashStore}, {@link DrinksStore} and initialize it.
+	 * @throws IOException if fail to initialize stores; reading properties.
+	 */
+	public static synchronized StoreController getInstance(
+			PropertyLoader cLoader,
+			PropertyLoader dLoader) {
+		if(null == storeController) {
+			storeController = new StoreController(cLoader, dLoader);
+		}
+		return storeController;
+	}
+	
 
 	/**
 	 * This method instantiate the {@link CashStore}, {@link DrinksStore} and initialize it.

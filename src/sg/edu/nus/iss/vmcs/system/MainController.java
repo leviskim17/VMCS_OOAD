@@ -73,7 +73,7 @@ public class MainController {
 			cashLoader.initialize();
 			drinksLoader.initialize();
 			
-			storeCtrl = new StoreController(cashLoader, drinksLoader);
+			storeCtrl = StoreController.getInstance(cashLoader, drinksLoader); ///SingletonPattern
 			storeCtrl.initialize();
 			simulatorCtrl = new SimulationController(this);
 			machineryCtrl = new MachineryController(this);

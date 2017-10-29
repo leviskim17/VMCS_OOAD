@@ -6,6 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sg.edu.nus.iss.vmcs.system.AbstractCashLoader;
+import sg.edu.nus.iss.vmcs.system.AbstractDrinkLoader;
+import sg.edu.nus.iss.vmcs.system.AbstractPropertyLoaderFactory;
 import sg.edu.nus.iss.vmcs.system.CashPropertyLoader;
 import sg.edu.nus.iss.vmcs.system.DrinkPropertyLoader;
 import sg.edu.nus.iss.vmcs.system.Environment;
@@ -26,14 +29,18 @@ public class StoreControllerTest extends TestCase{
 	@Test
 	public void testStoreControllerConstructor() throws Exception{
 		Environment.initialize(propertyFilename);
-		CashPropertyLoader cashLoader =
-			new CashPropertyLoader(Environment.getCashPropFile());
-		DrinkPropertyLoader drinksLoader =
-			new DrinkPropertyLoader(Environment.getDrinkPropFile());
+		//CashPropertyLoader cashLoader =
+		//	new CashPropertyLoader(Environment.getCashPropFile());
+		//DrinkPropertyLoader drinksLoader =
+		//	new DrinkPropertyLoader(Environment.getDrinkPropFile());
+		AbstractPropertyLoaderFactory propertyFactory = (AbstractPropertyLoaderFactory)Class.forName(Environment.getPropertyFactoryName()).newInstance();
+		AbstractCashLoader cashLoader = propertyFactory.createCashLoader();
+		AbstractDrinkLoader drinksLoader = propertyFactory.createDrinkLoader();
+		
 		cashLoader.initialize();
 		drinksLoader.initialize();
 		//Act
-		StoreController storeController=new StoreController(cashLoader, drinksLoader);
+		StoreController storeController=StoreController.getInstance(cashLoader, drinksLoader);
 		storeController.initialize();
 		//Assert
 		assertNotNull(storeController);
