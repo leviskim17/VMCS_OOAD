@@ -35,8 +35,6 @@ public class TransactionController {
 	private DispenseController dispenseCtrl;
 	private ChangeGiver changeGiver;
 	private CoinReceiver coinReceiver;
-	
-	private TransactionMediator mediator;
 
 	/**Set to TRUE when change is successfully issued during the transaction.*/
 	private boolean changeGiven=false;
@@ -53,11 +51,8 @@ public class TransactionController {
 	 */
 	public TransactionController(MainController mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		
-		mediator = new TransactionMediator();
-		
 		dispenseCtrl=new DispenseController(this);
-		coinReceiver=new CoinReceiver(mediator);
+		coinReceiver=new CoinReceiver(this);
 		changeGiver=new ChangeGiver(this);
 	}
 

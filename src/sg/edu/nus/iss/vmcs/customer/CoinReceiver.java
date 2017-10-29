@@ -20,7 +20,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class CoinReceiver extends Colleague{
+public class CoinReceiver {
 	private TransactionController txCtrl;
 	
 	/**List of the Coins entered during the transaction.*/
@@ -32,14 +32,10 @@ public class CoinReceiver extends Colleague{
 	 * This constructor creates an instance of the object.
 	 * @param txCtrl the transaction controller.
 	 */
-	public CoinReceiver(Mediator mediator){
-		super(mediator);
+	public CoinReceiver(TransactionController txCtrl){
+		this.txCtrl=txCtrl;
 		arlCoins=new ArrayList();
 		setTotalInserted(0);
-	}
-	
-	public void receive(String message) {
-		
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.vmcs.customer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TransactionMediator implements Mediator {
 	private ArrayList<Colleague> colleagues;
@@ -13,11 +14,12 @@ public class TransactionMediator implements Mediator {
 		colleagues.add(colleague);
 	}
 	
-	public void send(String message, Colleague originator) {
+	public void send(String message, String[] params, Colleague originator) {
+		System.out.println("Mediator >> Origin:" + originator.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+		
 		for(Colleague colleague: colleagues) {
 			if(colleague != originator) {
-				colleague.receive(message);
-				System.out.println("Message : " + message + ", " + originator);
+				colleague.receiveMessage(message, params);
 			}
 		}
 	}
