@@ -16,12 +16,15 @@ package sg.edu.nus.iss.vmcs.customer;
  */
 
 import java.awt.Frame;
+import java.util.Arrays;
 
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreItem;
 import sg.edu.nus.iss.vmcs.system.MainController;
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
+import sg.edu.nus.iss.vmcs.system.Colleague;
+import sg.edu.nus.iss.vmcs.system.ControllerMediator;
 
 /**
  * This control object coordinates the customer transactions for selection of a drink brand,
@@ -29,7 +32,7 @@ import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
  * @author Team SE16T5E
  * @version 1.0 2008-10-01
  */
-public class TransactionController {
+public class TransactionController extends Colleague {
 	private MainController mainCtrl;
 	private CustomerPanel custPanel;
 	private DispenseController dispenseCtrl;
@@ -49,7 +52,8 @@ public class TransactionController {
 	 * This constructor creates an instance of the TransactionController.
 	 * @param mainCtrl the MainController.
 	 */
-	public TransactionController(MainController mainCtrl) {
+	public TransactionController(MainController mainCtrl, ControllerMediator mediator) {
+		super(mediator);
 		this.mainCtrl = mainCtrl;
 		dispenseCtrl=new DispenseController(this);
 		coinReceiver=new CoinReceiver(this);
@@ -342,5 +346,23 @@ public class TransactionController {
 	 */
 	public void nullifyCustomerPanel(){
 		custPanel=null;
+	}
+
+	/**
+	 * When the TransactionController receives a message from the Control Mediator
+	 * <br>
+	 * 1- Check the message&#46
+	 * <br>
+	 * 2- If needed, refer the params&#46
+	 * <br>
+	 * 3- Processing based on the case&#46
+	 */
+	@Override
+	public void receiveEvent(String message, String[] params) {
+		switch(message) {
+		default:
+			//System.out.println("Received >> Name:" + this.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+			break;
+		}
 	}
 }//End of class TransactionController

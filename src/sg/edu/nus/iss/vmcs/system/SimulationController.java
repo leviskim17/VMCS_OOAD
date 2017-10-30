@@ -7,10 +7,14 @@
  */
 package sg.edu.nus.iss.vmcs.system;
 
+import java.util.Arrays;
+
 import sg.edu.nus.iss.vmcs.customer.TransactionController;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.maintenance.MaintenanceController;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
+import sg.edu.nus.iss.vmcs.system.Colleague;
+import sg.edu.nus.iss.vmcs.system.ControllerMediator;
 
 /**
  * This control object represents the operating system user interface at which the VMCS
@@ -19,7 +23,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class SimulationController {
+public class SimulationController extends Colleague {
 	private SimulatorControlPanel scp = null;
 	public  MainController        mCtrl = null;
 
@@ -27,7 +31,8 @@ public class SimulationController {
 	 * This constructor creates an instance of the SimulationController object.
 	 * @param ctrl the MainController.
 	 */
-	public SimulationController(MainController ctrl) {
+	public SimulationController(MainController ctrl, ControllerMediator mediator) {
+		super(mediator);
 		mCtrl = ctrl;
 		scp = new SimulatorControlPanel(this);
 	}
@@ -163,5 +168,23 @@ public class SimulationController {
 	 */
 	public MainController getMainController() {
 		return mCtrl;
+	}
+
+	/**
+	 * When the SimulationController receives a message from the Control Mediator
+	 * <br>
+	 * 1- Check the message&#46
+	 * <br>
+	 * 2- If needed, refer the params&#46
+	 * <br>
+	 * 3- Processing based on the case&#46
+	 */
+	@Override
+	public void receiveEvent(String message, String[] params) {
+		switch(message) {
+		default:
+			//System.out.println("Received >> Name:" + this.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+			break;
+		}
 	}
 }//End of class SimulationController

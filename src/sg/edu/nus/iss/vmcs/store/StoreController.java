@@ -8,6 +8,10 @@
 package sg.edu.nus.iss.vmcs.store;
 
 import java.io.IOException;
+import java.util.Arrays;
+
+import sg.edu.nus.iss.vmcs.system.Colleague;
+import sg.edu.nus.iss.vmcs.system.ControllerMediator;
 
 /**
  * This control object manages changes in CashStore attributes and 
@@ -26,7 +30,7 @@ import java.io.IOException;
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class StoreController {
+public class StoreController  extends Colleague {
 	private CashStore cStore;
 	private DrinksStore dStore;
 
@@ -41,8 +45,10 @@ public class StoreController {
 	 * @param drinksLoader the drinks loader.
 	 */
 	private StoreController(
+		ControllerMediator mediator,
 		PropertyLoader cashLoader,
 		PropertyLoader drinksLoader) {
+		super(mediator);
 		this.cashLoader = cashLoader;
 		this.drinksLoader = drinksLoader;
 	}
@@ -53,10 +59,11 @@ public class StoreController {
 	 * @throws IOException if fail to initialize stores; reading properties.
 	 */
 	public static synchronized StoreController getInstance(
+			ControllerMediator mediator,
 			PropertyLoader cLoader,
 			PropertyLoader dLoader) {
 		if(null == storeController) {
-			storeController = new StoreController(cLoader, dLoader);
+			storeController = new StoreController(mediator, cLoader, dLoader);
 		}
 		return storeController;
 	}
@@ -323,5 +330,31 @@ public class StoreController {
 		item = (CashStoreItem) getStoreItem(Store.CASH, idx);
 		for (int i = 0; i < numOfCoins; i++)
 			item.decrement();
+	}
+
+	/**
+	 * When the StoreController receives a message from the Control Mediator
+	 * <br>
+	 * 1- Check the message&#46
+	 * <br>
+	 * 2- If needed, refer the params&#46
+	 * <br>
+	 * 3- Processing based on the case&#46
+	 */
+	@Override
+	public void receiveEvent(String message, String[] params) {
+		switch(message) {
+		case "Store_transferAll":
+			System.out.println("Proper Receiver >> Name:" + this.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+			
+			Integer cc = transferAll();
+			String[] sendParams = {cc.toString()};
+			sendEvent("Store_transferedAll", sendParams);
+			break;
+			
+		default:
+			//System.out.println("Received >> Name:" + this.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+			break;
+		}
 	}
 }//End of class StoreController

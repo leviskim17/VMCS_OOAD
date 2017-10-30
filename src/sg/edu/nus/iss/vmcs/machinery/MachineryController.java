@@ -9,7 +9,12 @@ package sg.edu.nus.iss.vmcs.machinery;
 
 import sg.edu.nus.iss.vmcs.system.*;
 import sg.edu.nus.iss.vmcs.util.*;
+
+import java.util.Arrays;
+
 import sg.edu.nus.iss.vmcs.store.*;
+import sg.edu.nus.iss.vmcs.system.Colleague;
+import sg.edu.nus.iss.vmcs.system.ControllerMediator;
 
 /**
  * This object controls the Change State use case.
@@ -17,7 +22,7 @@ import sg.edu.nus.iss.vmcs.store.*;
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class MachineryController {
+public class MachineryController extends Colleague {
 	/**This attribute reference to the MainController*/
 	public MainController mainCtrl;
 	/**This attribute reference to the StoreController*/
@@ -30,7 +35,8 @@ public class MachineryController {
 	 * This constructor creates an instance of MachineryController.
 	 * @param mctrl the MainController.
 	 */
-	public MachineryController(MainController mctrl) {
+	public MachineryController(MainController mctrl, ControllerMediator mediator) {
+		super(mediator);
 		mainCtrl = mctrl;
 		storeCtrl = mctrl.getStoreController();
 	}
@@ -202,6 +208,37 @@ public class MachineryController {
 	public void refreshMachineryDisplay(){
 		if(ml!=null){
 			ml.refresh();
+		}
+	}
+	/**
+	 * When the MachineryController receives a message from the Control Mediator
+	 * <br>
+	 * 1- Check the message&#46
+	 * <br>
+	 * 2- If needed, refer the params&#46
+	 * <br>
+	 * 3- Processing based on the case&#46
+	 */
+	@Override
+	public void receiveEvent(String message, String[] params) {
+		switch(message) {
+		case "Machinery_displayCoinStock":
+			System.out.println("Receiver >> Name:" + this.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+			
+			try {
+				displayCoinStock();
+			} catch (VMCSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			params[0] = "";
+			sendEvent("Machinery_displayedCoinStock", params);
+
+			break;
+		default:
+			//System.out.println("Received >> Name:" + this.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+			break;
 		}
 	}
 }//End of class MachineryController

@@ -8,6 +8,7 @@
 package sg.edu.nus.iss.vmcs.maintenance;
 
 import java.awt.Frame;
+import java.util.Arrays;
 
 import sg.edu.nus.iss.vmcs.customer.CustomerPanel;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
@@ -20,6 +21,8 @@ import sg.edu.nus.iss.vmcs.system.MainController;
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 import sg.edu.nus.iss.vmcs.util.MessageDialog;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
+import sg.edu.nus.iss.vmcs.system.Colleague;
+import sg.edu.nus.iss.vmcs.system.ControllerMediator;
 
 /**
  * This control object handles the system maintenance use case.
@@ -27,7 +30,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
-public class MaintenanceController {
+public class MaintenanceController extends Colleague {
 	private MainController mCtrl;
 	private MaintenancePanel mpanel;
 	private AccessManager am;
@@ -36,7 +39,8 @@ public class MaintenanceController {
 	 * This constructor creates an instance of the MaintenanceController.
 	 * @param mctrl the MainController.
 	 */
-	public MaintenanceController(MainController mctrl) {
+	public MaintenanceController(MainController mctrl, ControllerMediator mediator) {
+		super(mediator);
 		mCtrl = mctrl;
 		am = new AccessManager(this);
 	}
@@ -168,6 +172,10 @@ public class MaintenanceController {
 	 * It get all the cash from store and set store cash 0.
 	 */
 	public void transferAll() {
+		String[] params = {};
+		sendEvent("Store_transferAll", params);
+		
+		/* Mediator Pattern - Applied
 		StoreController sctrl = mCtrl.getStoreController();
 		MachineryController machctrl = mCtrl.getMachineryController();
 
@@ -176,6 +184,7 @@ public class MaintenanceController {
 		try {
 			cc = sctrl.transferAll();
 			mpanel.displayCoins(cc);
+			
 			machctrl.displayCoinStock();
 			// the cash qty current is displayed in the Maintenance panel needs to be update to be 0;
 			// not required.
@@ -183,6 +192,7 @@ public class MaintenanceController {
 		} catch (VMCSException e) {
 			System.out.println("MaintenanceController.transferAll:" + e);
 		}
+		*/
 	}
 
 	/**
@@ -248,5 +258,45 @@ public class MaintenanceController {
 	public void closeDown() {
 		if (mpanel != null)
 			mpanel.closeDown();
+	}
+
+	/**
+	 * When the MaintenanceController receives a message from the Control Mediator
+	 * <br>
+	 * 1- Check the message&#46
+	 * <br>
+	 * 2- If needed, refer the params&#46
+	 * <br>
+	 * 3- Processing based on the case&#46
+	 */
+	@Override
+	public void receiveEvent(String message, String[] params){
+		switch(message) {
+		case "Store_transferedAll":
+			System.out.println("Proper Receiver >> Name:" + this.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+			
+			int cc = Integer.parseInt(params[0]);
+			mpanel.displayCoins(cc);
+			
+			params[0] = "";
+			sendEvent("Machinery_displayCoinStock", params);
+			
+			break;
+			
+		case "Machinery_displayedCoinStock":
+			System.out.println("Proper Receiver >> Name:" + this.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+			
+			try {
+				mpanel.updateCurrentQtyDisplay(Store.CASH, 0);
+			} catch (VMCSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		default:
+			//System.out.println("Received >> Name:" + this.getClass().getSimpleName() + " Message:" + message + " Param(s):" + Arrays.toString(params));
+			break;
+		}
 	}
 }//End of class MaintenanceController

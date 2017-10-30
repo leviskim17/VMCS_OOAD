@@ -27,6 +27,9 @@ public class MainController {
 	private MaintenanceController maintenanceCtrl;
 	private TransactionController txCtrl;
 	private StoreController       storeCtrl;
+	
+	//MediatorPattern - the instance of concrete mediator.
+	private ControllerMediator ctrlMediator;
 
 	private String      propertyFile;
 
@@ -73,13 +76,25 @@ public class MainController {
 			cashLoader.initialize();
 			drinksLoader.initialize();
 			
-			storeCtrl = StoreController.getInstance(cashLoader, drinksLoader); ///SingletonPattern
+			//MediatorPattern - Creating of concrete mediator.
+			ctrlMediator = new ControllerMediator();
+			
+			storeCtrl = StoreController.getInstance(ctrlMediator, cashLoader, drinksLoader); ///SingletonPattern
 			storeCtrl.initialize();
-			simulatorCtrl = new SimulationController(this);
-			machineryCtrl = new MachineryController(this);
+			
+			//MediatorPattern - Applying of concrete mediator.
+			simulatorCtrl = new SimulationController(this, ctrlMediator);
+			machineryCtrl = new MachineryController(this, ctrlMediator);
 			machineryCtrl.initialize();
-			maintenanceCtrl = new MaintenanceController(this);
-			txCtrl=new TransactionController(this);
+			maintenanceCtrl = new MaintenanceController(this, ctrlMediator);
+			txCtrl=new TransactionController(this, ctrlMediator);
+			
+			//MediatorPattern - Adding Colleagues.
+			ctrlMediator.addColleague(storeCtrl);
+			ctrlMediator.addColleague(simulatorCtrl);
+			ctrlMediator.addColleague(machineryCtrl);
+			ctrlMediator.addColleague(maintenanceCtrl);
+			ctrlMediator.addColleague(txCtrl);
 		} catch (IOException e) {
 			throw new VMCSException(
 				"MainController.initialize",
