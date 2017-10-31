@@ -88,17 +88,18 @@ public class Environment {
 			//throw new RuntimeException("No Property Type defined in the vcms.properties.");
 		}
 		
-		f_type = f_type.toUpperCase();
+		/*
+		if_type = f_type.toUpperCase();
 		
 		if(f_type.equals("FILE")){
-			System.out.println("----------Type ---------------File");
 			return "sg.edu.nus.iss.vmcs.system.FilePropertyLoaderFactory";
 		}
 		
 		if(f_type.equals("XML")){
 			return "sg.edu.nus.iss.vmcs.system.XMLPropertyLoaderFactory";
 		}
-		return "";
+		*/
+		return f_type;
 		//throw new IllegalArgumentException(f_type + " Persistance Factory is not avaialble.");
 		
 	}
