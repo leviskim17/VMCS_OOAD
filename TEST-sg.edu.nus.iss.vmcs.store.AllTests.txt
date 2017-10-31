@@ -1,51 +1,86 @@
 Testsuite: sg.edu.nus.iss.vmcs.store.AllTests
-Tests run: 44, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.361 sec
+Tests run: 59, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.475 sec
+------------- Standard Output ---------------
+StoreController.changeStoreQty: type:1 qty:12
+Store: setQauntity - qty=12
+StoreController.changeStoreQty: type:1 qty:13
+Store: setQauntity - qty=13
+StoreController.changeStoreQty: type:1 qty:14
+Store: setQauntity - qty=14
+StoreController.changeStoreQty: type:1 qty:15
+Store: setQauntity - qty=15
+StoreController.changeStoreQty: type:1 qty:16
+Store: setQauntity - qty=16
+StoreController.changeStoreQty: type:2 qty:14
+Store: setQauntity - qty=14
+StoreController.changeStoreQty: type:2 qty:15
+Store: setQauntity - qty=15
+StoreController.changeStoreQty: type:2 qty:16
+Store: setQauntity - qty=16
+StoreController.changeStoreQty: type:2 qty:17
+Store: setQauntity - qty=17
+StoreController.changeStoreQty: type:2 qty:18
+Store: setQauntity - qty=18
+StoreController.changeStoreQty: type:2 qty:19
+Store: setQauntity - qty=19
+------------- ---------------- ---------------
 
-Testcase: testSetGetQuantity took 0.168 sec
-Testcase: testStore took 0.006 sec
-Testcase: testDecrement took 0.004 sec
-Testcase: testIncrement took 0.005 sec
-Testcase: testSetGetContent took 0.004 sec
+Testcase: testSetGetQuantity took 0.15 sec
+Testcase: testSetGetContent took 0.005 sec
 Testcase: testCashStoreItemConstructor took 0 sec
-Testcase: testFindCashStoreIndex took 0.004 sec
-Testcase: testSetGetStoreSize took 0.004 sec
-Testcase: testIsValidWeight took 0.004 sec
+Testcase: testIncrement took 0.005 sec
+Testcase: testDecrement took 0.004 sec
+Testcase: testStore took 0.004 sec
+Testcase: testIsValidWeight took 0.005 sec
+Testcase: testFindCashStoreIndex took 0.005 sec
+Testcase: testSetGetStoreSize took 0.005 sec
 Testcase: testCashStoreConstructor took 0 sec
 Testcase: testGetItems took 0.005 sec
-Testcase: testAddItem took 0.004 sec
-Testcase: testGetStoreItem took 0.004 sec
-Testcase: testFindObject took 0.004 sec
-Testcase: testSetQuantity took 0.004 sec
-Testcase: testFindCoin took 0.004 sec
+Testcase: testAddItem took 0.005 sec
+Testcase: testGetStoreItem took 0.008 sec
+Testcase: testSetQuantity took 0.007 sec
+Testcase: testFindObject took 0.006 sec
+Testcase: testFindCoin took 0.005 sec
 Testcase: testCoinConstructor took 0 sec
-Testcase: testSetGetWeight took 0 sec
 Testcase: testSetGetValue took 0 sec
+Testcase: testSetGetWeight took 0 sec
 Testcase: testDrinksBrandConstructor took 0 sec
 Testcase: testSetGetName took 0 sec
 Testcase: testSetGetPrice took 0 sec
+Testcase: testDrinksStoreItemConstructor took 0 sec
 Testcase: testSetGetQuantity took 0.005 sec
-Testcase: testStore took 0.005 sec
-Testcase: testDecrement took 0.003 sec
+Testcase: testSetGetContent took 0.005 sec
 Testcase: testIncrement took 0.004 sec
-Testcase: testDrinksStoreItemConstructor took 0.001 sec
-Testcase: testSetGetContent took 0.004 sec
+Testcase: testDecrement took 0.004 sec
+Testcase: testStore took 0.004 sec
 Testcase: testSetGetStoreSize took 0.004 sec
 Testcase: testDrinksStoreConstructor took 0 sec
 Testcase: testGetItems took 0.004 sec
 Testcase: testAddItem took 0.004 sec
 Testcase: testGetStoreItem took 0.005 sec
-Testcase: testFindObject took 0.004 sec
 Testcase: testSetQuantity took 0.004 sec
-Testcase: warning took 0 sec
-	FAILED
-No tests found in sg.edu.nus.iss.vmcs.store.StoreControllerTest
-junit.framework.AssertionFailedError: No tests found in sg.edu.nus.iss.vmcs.store.StoreControllerTest
-
-Testcase: testSetGetQuantity took 0.005 sec
-Testcase: testStore took 0.005 sec
-Testcase: testDecrement took 0.004 sec
-Testcase: testIncrement took 0.004 sec
+Testcase: testFindObject took 0.004 sec
+Testcase: testStoreControllerConstructor took 0.001 sec
+Testcase: testInitializeStores took 0.029 sec
+Testcase: testInitializeDrinkStore took 0.004 sec
+Testcase: testInitializeCashStore took 0.004 sec
+Testcase: testGetStoreItems took 0.004 sec
+Testcase: testChangeStoreQty took 0.004 sec
+Testcase: testGetStoreItem took 0.004 sec
+Testcase: testInitialize took 0.004 sec
+Testcase: testStoreCoin took 0.003 sec
+Testcase: testGetStoreSize took 0.004 sec
+Testcase: testSetPrice took 0.004 sec
+Testcase: testGetTotalCash took 0.004 sec
+Testcase: testTransferAll took 0.004 sec
+Testcase: testCloseDown took 0.014 sec
+Testcase: testGetStore took 0.004 sec
+Testcase: testGiveChange took 0.003 sec
 Testcase: testStoreItemConstructor took 0 sec
+Testcase: testSetGetQuantity took 0.004 sec
 Testcase: testSetGetContent took 0.004 sec
+Testcase: testIncrement took 0.004 sec
+Testcase: testDecrement took 0.004 sec
+Testcase: testStore took 0.004 sec
 Testcase: testStoreObjectConstructor took 0 sec
 Testcase: testSetGetName took 0 sec

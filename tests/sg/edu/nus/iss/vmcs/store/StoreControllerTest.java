@@ -10,6 +10,7 @@ import sg.edu.nus.iss.vmcs.system.AbstractCashLoader;
 import sg.edu.nus.iss.vmcs.system.AbstractDrinkLoader;
 import sg.edu.nus.iss.vmcs.system.AbstractPropertyLoaderFactory;
 import sg.edu.nus.iss.vmcs.system.CashPropertyLoader;
+import sg.edu.nus.iss.vmcs.system.ControllerMediator;
 import sg.edu.nus.iss.vmcs.system.DrinkPropertyLoader;
 import sg.edu.nus.iss.vmcs.system.Environment;
 import sg.edu.nus.iss.vmcs.system.MainController;
@@ -25,7 +26,7 @@ public class StoreControllerTest extends TestCase{
 	@After
 	public void tearDown() throws Exception{
 	}
-	/*
+	
 	@Test
 	public void testStoreControllerConstructor() throws Exception{
 		Environment.initialize(propertyFilename);
@@ -40,7 +41,7 @@ public class StoreControllerTest extends TestCase{
 		cashLoader.initialize();
 		drinksLoader.initialize();
 		//Act
-		StoreController storeController=StoreController.getInstance(cashLoader, drinksLoader);
+		StoreController storeController=StoreController.getInstance(new ControllerMediator(),cashLoader, drinksLoader);
 		storeController.initialize();
 		//Assert
 		assertNotNull(storeController);
@@ -408,5 +409,5 @@ public class StoreControllerTest extends TestCase{
 			assertEquals(qty1,qty2+1);
 		}
 	}
-	*/
+
 }//End of class StoreControllerTest
